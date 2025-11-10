@@ -15,7 +15,7 @@ export const mediaItems = [
     id: 'video-1',
     type: 'video',
     title: '키즈티티 홍보 영상 1',
-    src: 'https://www.youtube.com/embed/iKbEICtNaBI?rel=0&modestbranding=1',
+    src: 'https://www.youtube.com/embed/pANiMM79IQg?start=312&rel=0&modestbranding=1',
   },
   {
     id: 'video-2',
