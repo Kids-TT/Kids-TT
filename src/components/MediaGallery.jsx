@@ -1,4 +1,5 @@
 import React from 'react';
+import YouTubeEmbed from './YouTubeEmbed';
 
 function MediaGallery({ items }) {
   return (
@@ -7,21 +8,16 @@ function MediaGallery({ items }) {
         if (item.type === 'image') {
           return (
             <section key={item.id} className="media-section">
-              <img src={item.src} alt={item.alt} className="media-section__image" />
+              <div className="media-section__image-wrapper">
+                <img src={item.src} alt={item.alt} className="media-section__image" />
+              </div>
             </section>
           );
         }
 
         return (
           <section key={item.id} className="media-section">
-            <div className="media-section__video">
-              <iframe
-                title={item.title}
-                src={item.src}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+            <YouTubeEmbed title={item.title} embedUrl={item.src} />
           </section>
         );
       })}
