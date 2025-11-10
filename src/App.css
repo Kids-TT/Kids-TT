@@ -185,6 +185,25 @@ main {
   box-shadow: 0 12px 24px rgba(255, 140, 64, 0.35);
 }
 
+.contact-form__feedback {
+  margin-top: 24px;
+  font-size: 15px;
+  line-height: 1.6;
+  border-radius: 16px;
+  padding: 16px 20px;
+  background-color: rgba(23, 64, 109, 0.06);
+}
+
+.contact-form__feedback--success {
+  color: #0c6a3b;
+  background-color: rgba(12, 106, 59, 0.1);
+}
+
+.contact-form__feedback--error {
+  color: #b00020;
+  background-color: rgba(176, 0, 32, 0.08);
+}
+
 .footer {
   padding: 48px 24px;
   background-color: #1d1d1f;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ContactSection({ onSubmit }) {
+function ContactSection({ onSubmit, isSending, sendStatus }) {
   return (
     <section className="contact-section" id="contact">
       <div className="contact-section__inner">
@@ -41,9 +41,19 @@ function ContactSection({ onSubmit }) {
             />
           </label>
           <button type="submit" className="contact-form__submit">
-            메일 보내기
+            {isSending ? '보내는 중...' : '메일 보내기'}
           </button>
         </form>
+        {sendStatus === 'success' && (
+          <p className="contact-form__feedback contact-form__feedback--success">
+            문의가 성공적으로 전송되었습니다. 빠르게 확인 후 연락드릴게요!
+          </p>
+        )}
+        {sendStatus === 'error' && (
+          <p className="contact-form__feedback contact-form__feedback--error">
+            전송에 실패했습니다. 잠시 후 다시 시도하거나 1588-1181로 연락 부탁드립니다.
+          </p>
+        )}
       </div>
     </section>
   );
