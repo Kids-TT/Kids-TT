@@ -4,10 +4,10 @@ function SiteFooter() {
   return (
     <footer className="footer">
       <div className="footer__inner">
-        <p>대표 : 권영득</p>
-        <p>주소 : 인천시 계양구 장제로 708, 310</p>
-        <p>연락처 : 1588-1181 | 이메일 : yoci7777@gmail.com</p>
-        <p>사업자등록번호 : 790-81-02662</p>
+        <p>대표 : 손성찬</p>
+        <p>주소 : 서울특별시 송파구 올림픽로 51길 63</p>
+        <p>연락처 : 02-477-9133 | 이메일 : masterson3@naver.com</p>
+        <p>사업자등록번호 : 168-69-00356</p>
       </div>
     </footer>
   );
