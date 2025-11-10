@@ -7,6 +7,27 @@ import ContactSection from './components/ContactSection';
 import SiteFooter from './components/SiteFooter';
 import { mediaItems } from './data/mediaItems';
 
+const isValidPhoneNumber = (value) => {
+  if (!value) {
+    return false;
+  }
+  if (!/^[\d-]+$/.test(value)) {
+    return false;
+  }
+  if (value.startsWith('-') || value.endsWith('-') || value.includes('--')) {
+    return false;
+  }
+  const hyphenCount = (value.match(/-/g) || []).length;
+  if (hyphenCount > 2) {
+    return false;
+  }
+  const digitsOnly = value.replace(/-/g, '');
+  if (digitsOnly.length < 9 || digitsOnly.length > 11) {
+    return false;
+  }
+  return true;
+};
+
 function App() {
   const COOLDOWN_MS = 60 * 1000; // 1분
   const [isSending, setIsSending] = useState(false);
@@ -61,8 +82,6 @@ function App() {
 
   const isInCooldown = useMemo(() => cooldownRemaining > 0, [cooldownRemaining]);
 
-  const PHONE_REGEX = useMemo(() => /^\d{2,3}-\d{3,4}-\d{4}$/, []);
-
   const handleContactSubmit = useCallback((event) => {
     event.preventDefault();
     if (isSending) {
@@ -75,8 +94,7 @@ function App() {
 
     const formData = new FormData(event.target);
     const payload = Object.fromEntries(formData.entries());
-
-    if (!PHONE_REGEX.test(payload.phone)) {
+    if (!isValidPhoneNumber(payload.phone)) {
       setSendStatus('invalid-phone');
       return;
     }
@@ -97,7 +115,7 @@ function App() {
       .finally(() => {
         setIsSending(false);
       });
-  }, [isSending, isInCooldown, PHONE_REGEX]);
+  }, [isSending, isInCooldown]);
 
   return (
     <div className="page">

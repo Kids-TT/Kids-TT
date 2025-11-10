@@ -1,6 +1,65 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+const isValidPhoneNumber = (value) => {
+  if (!value) {
+    return false;
+  }
+  if (!/^[\d-]+$/.test(value)) {
+    return false;
+  }
+  if (value.startsWith('-') || value.endsWith('-') || value.includes('--')) {
+    return false;
+  }
+  const hyphenCount = (value.match(/-/g) || []).length;
+  if (hyphenCount > 2) {
+    return false;
+  }
+  const digitsOnly = value.replace(/-/g, '');
+  if (digitsOnly.length < 9 || digitsOnly.length > 11) {
+    return false;
+  }
+  return true;
+};
 
 function ContactSection({ onSubmit, isSending, sendStatus, isDisabled, cooldownSeconds }) {
+  const [phoneValue, setPhoneValue] = useState('');
+  const isPhoneInvalid = phoneValue.length > 0 && !isValidPhoneNumber(phoneValue);
+
+  useEffect(() => {
+    if (sendStatus === 'success') {
+      setPhoneValue('');
+    }
+  }, [sendStatus]);
+
+  const handlePhoneChange = (event) => {
+    const input = event.target.value;
+    const sanitized = input.replace(/[^\d-]/g, '');
+    let digits = 0;
+    let hyphens = 0;
+    let result = '';
+
+    for (const char of sanitized) {
+      if (char === '-') {
+        if (hyphens >= 2) {
+          continue;
+        }
+        if (result === '' || result.endsWith('-')) {
+          continue;
+        }
+        hyphens += 1;
+        result += char;
+      } else {
+        if (digits >= 11) {
+          continue;
+        }
+        digits += 1;
+        result += char;
+      }
+    }
+
+    setPhoneValue(result);
+  };
+
   return (
     <section className="contact-section" id="contact">
       <div className="contact-section__inner">
@@ -26,8 +85,9 @@ function ContactSection({ onSubmit, isSending, sendStatus, isDisabled, cooldownS
               placeholder="010-0000-0000"
               required
               inputMode="tel"
-              pattern="\\d{2,3}-\\d{3,4}-\\d{4}"
-              aria-invalid={sendStatus === 'invalid-phone'}
+              aria-invalid={isPhoneInvalid}
+              value={phoneValue}
+              onChange={handlePhoneChange}
             />
           </label>
           <label className="contact-form__field">
@@ -62,9 +122,9 @@ function ContactSection({ onSubmit, isSending, sendStatus, isDisabled, cooldownS
             전송에 실패했습니다. 잠시 후 다시 시도하거나 1588-1181로 연락 부탁드립니다.
           </p>
         )}
-        {sendStatus === 'invalid-phone' && (
+        {isPhoneInvalid && (
           <p className="contact-form__feedback contact-form__feedback--error">
-            연락처 형식이 올바르지 않습니다. 010-1234-5678 또는 02-123-4567과 같은 형식으로 입력해주세요.
+            연락처 형식이 올바르지 않습니다. 숫자는 9~11자리, 하이픈(-)은 최대 2개까지만 사용할 수 있어요.
           </p>
         )}
         {sendStatus === 'cooldown' && (
