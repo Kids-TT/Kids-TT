@@ -1,18 +1,14 @@
-import imageOne from '../../image/image_1.jpeg';
-import imageTwo from '../../image/image_2.jpeg';
-import imageThree from '../../image/image_3.jpeg';
-
 export const mediaItems = [
   {
     id: 'image-1',
     type: 'image',
-    src: imageOne,
+    src: `${process.env.PUBLIC_URL}/media/image_1.jpeg`,
     alt: '키즈티티 활동 소개 1',
   },
   {
     id: 'image-2',
     type: 'image',
-    src: imageTwo,
+    src: `${process.env.PUBLIC_URL}/media/image_2.jpeg`,
     alt: '키즈티티 활동 소개 2',
   },
   {
@@ -30,7 +26,7 @@ export const mediaItems = [
   {
     id: 'image-3',
     type: 'image',
-    src: imageThree,
+    src: `${process.env.PUBLIC_URL}/media/image_3.jpeg`,
     alt: '키즈티티 활동 소개 3',
   },
 ];
